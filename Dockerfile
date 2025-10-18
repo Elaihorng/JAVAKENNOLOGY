@@ -1,8 +1,14 @@
-FROM maven:3-eclipse-temurin-17 AS build
-COPY . .
-RUN mvn package -DskipTests
+# Use lightweight JDK 21 base image
+FROM eclipse-temurin:21-jre-alpine
 
-FROM eclipse-temurin:17-alpine 
-COPY --from=build /target/*.jar coffee-shop-telegram-bot-0.0.1-SNAPSHOT.jar
+# Set working directory in the container
+WORKDIR /app
+
+# Copy the Spring Boot JAR into the container
+COPY coffee-shop-telegram-bot-0.0.1-SNAPSHOT.jar .
+
+# Expose the port the app will run 
 EXPOSE 8089
-ENTRYPOINT [ "java","-jar", "coffee-shop-telegram-bot-0.0.1-SNAPSHOT.jar" ]
+
+# Command to run the Spring Boot app
+CMD ["sh", "-c", "java -Dserver.port=$PORT -jar coffee-shop-telegram-bot-0.0.1-SNAPSHOT.jar"]
