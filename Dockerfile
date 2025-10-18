@@ -8,7 +8,7 @@ WORKDIR /app
 COPY coffee-shop-telegram-bot-0.0.1-SNAPSHOT.jar .
 
 # Expose the port the app will run 
-EXPOSE 8089
+EXPOSE 8080
 
 # Command to run the Spring Boot app
 CMD ["sh", "-c", "java -Dserver.port=$PORT -jar coffee-shop-telegram-bot-0.0.1-SNAPSHOT.jar"]
